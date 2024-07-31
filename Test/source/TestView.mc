@@ -27,6 +27,23 @@ class TestView extends WatchUi.WatchFace {
     function onShow() as Void {
     }
 
+    function dayOfWeekName(day_of_week) as String {
+        
+        var weekDayName = "??";
+        switch (day_of_week)
+        {
+            case 1: weekDayName = "Sun"; break;
+            case 2: weekDayName = "Mon"; break;
+            case 3: weekDayName = "Tue"; break;
+            case 4: weekDayName = "Wed"; break;
+            case 5: weekDayName = "Thr"; break;
+            case 6: weekDayName = "Fri"; break;
+            case 7: weekDayName = "Sat"; break; 
+        }
+
+        return weekDayName;
+    }
+
     // Update the view
     function onUpdate(dc as Dc) as Void {
         // Get and show the current time
@@ -42,20 +59,8 @@ class TestView extends WatchUi.WatchFace {
             Lang.format("$1$", [clockTime.min.format("%02d")])
         );
 
-        var weekDayName = "??";
-        switch (info.day_of_week)
-        {
-            case 1: weekDayName = "Sun";
-            case 2: weekDayName = "Mon";
-            case 3: weekDayName = "Tue";
-            case 4: weekDayName = "Wed";
-            case 5: weekDayName = "Thr";
-            case 6: weekDayName = "Fri";
-            case 7: weekDayName = "Sat";        
-        }
-
         (View.findDrawableById("CurrentDate") as Text).setText(
-            Lang.format("$3$ $1$/$2$", [info.day.format("%02u"), info.month.format("%02u"), weekDayName])
+            Lang.format("$3$ $1$/$2$", [info.day.format("%02u"), info.month.format("%02u"), dayOfWeekName(info.day_of_week)])
         );
 
         var complication = Complications.getComplication(
